@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ##################################################################
+       PLANTILLA PARA UN DOCUMENTO NUEVO
+       Copia este archivo, renómbralo (ej. 2026-02-carta-arrendamientos.html)
+       y cambia SOLO lo que está marcado con  ✏️  más abajo.
+       No borres el guion bajo del nombre solo en ESTA plantilla; tus copias
+       NO deben empezar por guion bajo (para que se publiquen).
+       ################################################################## -->
+
+  <!-- ✏️ 1) Título de la pestaña -->
+  <title>TÍTULO DEL DOCUMENTO · Observatorio</title>
+  <!-- ✏️ 2) Descripción breve -->
+  <meta name="description" content="DESCRIPCIÓN BREVE DEL DOCUMENTO.">
+
+  <!-- ===== TARJETA LINKEDIN — ✏️ 3) rellena estos campos ===== -->
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="Observatorio de Normalización Contable">
+  <meta property="og:title" content="TÍTULO DEL DOCUMENTO">
+  <meta property="og:description" content="DESCRIPCIÓN QUE APARECERÁ EN LA TARJETA DE LINKEDIN.">
+  <!-- ✏️ 4) Cambia el nombre de archivo por el real (ruta ABSOLUTA con https://) -->
+  <meta property="og:url" content="https://TU-DOMINIO.es/documentos/NOMBRE-DE-ESTE-ARCHIVO.html">
+  <!-- Imagen de la tarjeta: por defecto la general. Si haces una propia, cámbiala. -->
+  <meta property="og:image" content="https://TU-DOMINIO.es/img/og/og-general.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+<a class="skip" href="#principal">Saltar al contenido</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><b>Observatorio</b><span>Normalización&nbsp;Contable</span></a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="../index.html">Inicio</a>
+      <a href="../documentos.html">Documentos</a>
+      <a href="../casos.html">Casos</a>
+      <a href="../entrevistas.html">Entrevistas</a>
+    </nav>
+  </div>
+</header>
+
+<main id="principal">
+  <article class="doc-article">
+    <div class="wrap">
+      <!-- ✏️ 5) Etiqueta pequeña: Resumen NIIF / Carta de comentario / Working paper / Presentación / Caso / Entrevista -->
+      <p class="doc-kicker">CATEGORÍA</p>
+      <!-- ✏️ 6) Título visible -->
+      <h1>TÍTULO DEL DOCUMENTO</h1>
+      <!-- ✏️ 7) Fecha visible -->
+      <p class="doc-fecha">FECHA (ej. 12 de febrero de 2026)</p>
+
+      <!-- Bloque de descarga. ✏️ 8) Cambia la ruta al PDF real, o borra este bloque si no hay PDF -->
+      <div class="doc-descarga">
+        <span>Documento completo en PDF</span>
+        <a class="registro__pdf" href="../pdf/NOMBRE-DEL-PDF.pdf" download>Descargar PDF</a>
+      </div>
+
+      <!-- ✏️ 9) Texto del documento (puede ser corto y remitir al PDF) -->
+      <div class="doc-body">
+        <p>Primer párrafo…</p>
+        <p>Segundo párrafo…</p>
+      </div>
+
+      <a class="doc-volver" href="../documentos.html">← Volver al registro de documentos</a>
+    </div>
+  </article>
+</main>
+
+
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div><strong style="color:#fff;font-family:var(--serif)">Observatorio de Normalización Contable</strong><br>Universidad Loyola Andalucía · en colaboración con el ICAC</div>
+    <div class="logos">Financiado por FECYT<br>Convocatoria de Cultura de la Innovación Pública 2025</div>
+  </div>
+  <!-- ===== LOGOS INSTITUCIONALES (dentro del pie, igual en todas las páginas) ===== -->
+  <div class="wrap foot-logos">
+    <div class="logos-caja">
+      <div class="logos-caja__grupo logos-caja__onc">
+        <img src="../img/logos/logos-onc.svg" alt="Universidad Loyola Andalucía, Gobierno de España e ICAC" loading="lazy">
+      </div>
+      <hr class="logos-caja__sep">
+      <div class="logos-caja__grupo logos-caja__fecyt">
+        <p class="logos-caja__label">Con la colaboración de</p>
+        <img src="../img/logos/fecyt.svg" alt="FECYT — Fundación Española para la Ciencia y la Tecnología. Ministerio de Ciencia, Innovación y Universidades" loading="lazy">
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="../js/legal.js"></script>
+</body>
+</html>
