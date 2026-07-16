@@ -26,6 +26,16 @@ window.CONTENIDO = [
     seccion: "documento",
     categoria: "resumen-niif",
     catLabel: "Resumen NIIF",
+    fecha: "2026-05-01",
+    titulo: "Análisis Ejecutivo Mayo 2026",
+    resumen: "Novedades en materia de información financiera de la Fundación NIIF en el mes de mayo.",
+    pagina: "documentos/2026-05-analisis-ejecutivo-mayo.html",
+    pdf: "pdf/Comentario_IASB_Mayo_2026.pdf"
+  },
+  {
+    seccion: "documento",
+    categoria: "resumen-niif",
+    catLabel: "Resumen NIIF",
     fecha: "2026-01-15",
     titulo: "Resumen de la reunión del IASB — enero 2026",
     resumen: "Síntesis de las decisiones y deliberaciones del Consejo del IASB en su reunión mensual.",
