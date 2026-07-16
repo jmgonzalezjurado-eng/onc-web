@@ -26,7 +26,9 @@
 
 <header class="site-head">
   <div class="wrap">
-    <a class="brand" href="index.html"><b>Observatorio</b><span>Normalización&nbsp;Contable</span></a>
+    <a class="brand" href="index.html">
+      <img class="brand__logo" src="img/logos/gaceta-contable.svg" alt="Gaceta Contable">
+    </a>
     <nav class="site-nav" aria-label="Principal">
       <a href="index.html" aria-current="page">Inicio</a>
       <a href="documentos.html">Documentos</a>
@@ -38,16 +40,30 @@
 
 <main id="principal">
 
-  <!-- ===== HERO ===== -->
-  <div class="hero hero--home">
+  <!-- ===== DOCUMENTOS (registro completo con filtros) ===== -->
+  <section id="documentos">
     <div class="wrap">
-      <p class="eyebrow">Universidad Loyola Andalucía · en colaboración con el ICAC</p>
-      <h1>La voz de la academia contable española en las normas internacionales.</h1>
-      <p class="lead">Seguimos, analizamos y difundimos los trabajos del IASB y del EFRAG para apoyar la participación del ICAC en la emisión de normas de información financiera.</p>
-      <p style="margin:2rem 0 0"><a class="btn btn--hero" href="#documentos">Ver los documentos</a></p>
-      <hr class="hero__filete">
+      <div class="section-head">
+        <p class="eyebrow">El registro del proyecto</p>
+        <h2>Documentos</h2>
+        <p>Resúmenes de novedades NIIF, cartas de comentario, working papers y presentaciones elaborados por el equipo.</p>
+      </div>
+      <div class="filtros-barra">
+        <div class="filtros" data-filtros="documento" role="group" aria-label="Filtrar por tipo">
+          <button class="filtro" data-cat="todas" aria-pressed="true">Todas</button>
+          <button class="filtro" data-cat="resumen-niif" aria-pressed="false">Resúmenes NIIF</button>
+          <button class="filtro" data-cat="carta-comentario" aria-pressed="false">Cartas de comentario</button>
+          <button class="filtro" data-cat="working-paper" aria-pressed="false">Working papers</button>
+          <button class="filtro" data-cat="presentacion" aria-pressed="false">Presentaciones</button>
+          <button class="filtro" data-cat="otros" aria-pressed="false">Otros</button>
+        </div>
+        <select class="filtro-fecha" data-filtro-fecha="documento" aria-label="Filtrar por mes y año">
+          <option value="">Todos los meses</option>
+        </select>
+      </div>
+      <div class="registro" data-registro="documento"></div>
     </div>
-  </div>
+  </section>
 
   <!-- ===== EL PROYECTO + VÍDEO (una sola sección, sin entrada en el menú) ===== -->
   <section>
@@ -146,19 +162,6 @@
           <span class="bloque">Presentación de información</span>
         </article>
       </div>
-    </div>
-  </section>
-
-  <!-- ===== DOCUMENTOS RECIENTES (registro) ===== -->
-  <section id="documentos">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Publicaciones recientes</p>
-        <h2>Documentos</h2>
-        <p>Resúmenes de novedades, cartas de comentario, working papers y presentaciones.</p>
-      </div>
-      <div class="registro" data-registro="documento" data-limite="3"></div>
-      <p style="margin-top:1.5rem"><a class="btn" href="documentos.html">Ver todos los documentos</a></p>
     </div>
   </section>
 
