@@ -90,7 +90,7 @@ h3 { font-size: 1.25rem; }
 }
 .site-head .wrap {
   display: flex; flex-direction: column; align-items: center;
-  gap: .45rem; padding: .9rem 0 .75rem;
+  gap: 1rem; padding: 1.1rem 0 .9rem;
 }
 .brand { display: block; text-decoration: none; }
 .brand__logo { height: 2.6rem; width: auto; display: block; }
@@ -425,11 +425,41 @@ img.persona__foto { object-fit: cover; display: block; }
   color: #cdd6e0; text-align: center; padding: 2rem; font-family: var(--mono); font-size: .85rem;
 }
 
-/* ---------- Bloque destacado ---------- */
+/* ---------- Bloque destacado (azul marino) ---------- */
 .destacado { background: var(--ink); color: #eef1f4; }
 .destacado h2 { color: #fff; }
 .destacado a.btn { color: #fff; }
 .destacado .lead { color: #cdd8e4; }
+
+/* Sección con fondo azul marino (home documentos) */
+.seccion-ink {
+  background: var(--ink);
+  border-block: none;
+}
+.seccion-ink .eyebrow { color: var(--brass-soft); }
+.seccion-ink h2 { color: #fff; }
+.seccion-ink .section-head p { color: #9fb3c8; }
+.seccion-ink .registro { border-top-color: rgba(255,255,255,.2); }
+.seccion-ink .registro__fila { border-bottom-color: rgba(255,255,255,.1); }
+.seccion-ink .registro__fila:hover { background: rgba(255,255,255,.05); }
+.seccion-ink .registro__fecha { color: #7a9ab5; }
+.seccion-ink .registro__cat { background: rgba(255,255,255,.07); color: #c7d8e8; border-color: rgba(255,255,255,.15); }
+.seccion-ink .registro__cat[data-cat="carta-comentario"] { color: var(--brass-soft); border-color: var(--brass-soft); }
+.seccion-ink .registro__cat[data-cat="working-paper"] { color: #8ab0cc; border-color: #8ab0cc; }
+.seccion-ink .registro__titulo a { color: #e8f0f7; }
+.seccion-ink .registro__titulo a:hover { color: var(--brass-soft); }
+.seccion-ink .registro__resumen { color: #7a9ab5; }
+.seccion-ink .acc { background: rgba(255,255,255,.07); color: #c7d8e8; border-color: rgba(255,255,255,.15); }
+.seccion-ink .acc--pdf:hover   { background: var(--brass);  color: #fff; border-color: var(--brass); }
+.seccion-ink .acc--share:hover { background: var(--brass); color: #fff; border-color: var(--brass); }
+
+/* Botón sobre fondo oscuro */
+.btn--ink {
+  background: transparent; color: #fff;
+  border-color: var(--brass-soft);
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.btn--ink:hover { background: var(--brass); color: #fff; border-color: var(--brass); }
 
 .btn {
   display: inline-block; font-family: var(--mono); font-size: .82rem;

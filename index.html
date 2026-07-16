@@ -40,28 +40,16 @@
 
 <main id="principal">
 
-  <!-- ===== DOCUMENTOS (registro completo con filtros) ===== -->
-  <section id="documentos">
+  <!-- ===== DOCUMENTOS RECIENTES ===== -->
+  <section id="documentos" class="seccion-ink">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">El registro del proyecto</p>
+        <p class="eyebrow">Publicaciones recientes</p>
         <h2>Documentos</h2>
         <p>Resúmenes de novedades NIIF, cartas de comentario, working papers y presentaciones elaborados por el equipo.</p>
       </div>
-      <div class="filtros-barra">
-        <div class="filtros" data-filtros="documento" role="group" aria-label="Filtrar por tipo">
-          <button class="filtro" data-cat="todas" aria-pressed="true">Todas</button>
-          <button class="filtro" data-cat="resumen-niif" aria-pressed="false">Resúmenes NIIF</button>
-          <button class="filtro" data-cat="carta-comentario" aria-pressed="false">Cartas de comentario</button>
-          <button class="filtro" data-cat="working-paper" aria-pressed="false">Working papers</button>
-          <button class="filtro" data-cat="presentacion" aria-pressed="false">Presentaciones</button>
-          <button class="filtro" data-cat="otros" aria-pressed="false">Otros</button>
-        </div>
-        <select class="filtro-fecha" data-filtro-fecha="documento" aria-label="Filtrar por mes y año">
-          <option value="">Todos los meses</option>
-        </select>
-      </div>
-      <div class="registro" data-registro="documento"></div>
+      <div class="registro" data-registro="documento" data-limite="3"></div>
+      <p style="margin-top:1.5rem"><a class="btn btn--ink" href="documentos.html">Ver todos los documentos</a></p>
     </div>
   </section>
 
@@ -194,13 +182,6 @@
 
 
 <footer class="site-foot">
-  <div class="wrap">
-    <div>
-      <strong style="color:#fff;font-family:var(--serif)">Observatorio de Normalización Contable</strong><br>
-      Universidad Loyola Andalucía · en colaboración con el ICAC
-    </div>
-    <div class="logos">Financiado por FECYT<br>Convocatoria de Cultura de la Innovación Pública 2025</div>
-  </div>
   <!-- ===== LOGOS INSTITUCIONALES (dentro del pie, igual en todas las páginas) ===== -->
   <div class="wrap foot-logos">
     <div class="logos-caja">
