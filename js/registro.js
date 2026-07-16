@@ -120,7 +120,7 @@
     var datos = window.CONTENIDO || [];
 
     document.querySelectorAll("[data-registro]").forEach(function (cont) {
-      var seccion = cont.getAttribute("data-registro");           // documento | caso | entrevista | todos
+      var seccion = cont.getAttribute("data-registro");
       var limite  = parseInt(cont.getAttribute("data-limite") || "0", 10);
 
       var base = seccion === "todos"
@@ -129,7 +129,39 @@
 
       if (limite > 0) base = ordenar(base).slice(0, limite);
 
-      render(cont, base);  // carga inicial sin animación
+      render(cont, base);
+
+      // Poblar el selector de mes/año con los valores únicos del contenido
+      var selectFecha = document.querySelector('[data-filtro-fecha="' + seccion + '"]');
+      if (selectFecha) {
+        var mesesVistos = {};
+        ordenar(base).forEach(function (d) {
+          var clave = d.fecha.slice(0, 7);
+          if (!mesesVistos[clave]) {
+            var p = d.fecha.split("-");
+            mesesVistos[clave] = MESES[parseInt(p[1], 10) - 1] + " " + p[0];
+          }
+        });
+        var opts = '<option value="">Todos los meses</option>';
+        Object.keys(mesesVistos).sort().reverse().forEach(function (c) {
+          opts += '<option value="' + c + '">' + mesesVistos[c] + '</option>';
+        });
+        selectFecha.innerHTML = opts;
+      }
+
+      var activeCat   = "todas";
+      var activeFecha = "";
+
+      function aplicarFiltros() {
+        var filtrada = base;
+        if (activeCat !== "todas") {
+          filtrada = filtrada.filter(function (d) { return d.categoria === activeCat; });
+        }
+        if (activeFecha) {
+          filtrada = filtrada.filter(function (d) { return d.fecha.slice(0, 7) === activeFecha; });
+        }
+        renderAnimado(cont, filtrada);
+      }
 
       var grupo = document.querySelector('[data-filtros="' + seccion + '"]');
       if (grupo) {
@@ -138,9 +170,15 @@
           if (!btn) return;
           grupo.querySelectorAll(".filtro").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
           btn.setAttribute("aria-pressed", "true");
-          var cat = btn.getAttribute("data-cat");
-          var filtrada = cat === "todas" ? base : base.filter(function (d) { return d.categoria === cat; });
-          renderAnimado(cont, filtrada);   // filtrado con transición suave
+          activeCat = btn.getAttribute("data-cat");
+          aplicarFiltros();
+        });
+      }
+
+      if (selectFecha) {
+        selectFecha.addEventListener("change", function () {
+          activeFecha = selectFecha.value;
+          aplicarFiltros();
         });
       }
     });

@@ -46,14 +46,20 @@
 
   <section>
     <div class="wrap">
-      <!-- Filtros por categoría -->
-      <div class="filtros" data-filtros="documento" role="group" aria-label="Filtrar por tipo">
-        <button class="filtro" data-cat="todas" aria-pressed="true">Todas</button>
-        <button class="filtro" data-cat="resumen-niif" aria-pressed="false">Resúmenes NIIF</button>
-        <button class="filtro" data-cat="carta-comentario" aria-pressed="false">Cartas de comentario</button>
-        <button class="filtro" data-cat="working-paper" aria-pressed="false">Working papers</button>
-        <button class="filtro" data-cat="presentacion" aria-pressed="false">Presentaciones</button>
-        <button class="filtro" data-cat="otros" aria-pressed="false">Otros</button>
+      <div class="filtros-barra">
+        <!-- Filtros por categoría -->
+        <div class="filtros" data-filtros="documento" role="group" aria-label="Filtrar por tipo">
+          <button class="filtro" data-cat="todas" aria-pressed="true">Todas</button>
+          <button class="filtro" data-cat="resumen-niif" aria-pressed="false">Resúmenes NIIF</button>
+          <button class="filtro" data-cat="carta-comentario" aria-pressed="false">Cartas de comentario</button>
+          <button class="filtro" data-cat="working-paper" aria-pressed="false">Working papers</button>
+          <button class="filtro" data-cat="presentacion" aria-pressed="false">Presentaciones</button>
+          <button class="filtro" data-cat="otros" aria-pressed="false">Otros</button>
+        </div>
+        <!-- Filtro por mes/año: opciones generadas en JS -->
+        <select class="filtro-fecha" data-filtro-fecha="documento" aria-label="Filtrar por mes y año">
+          <option value="">Todos los meses</option>
+        </select>
       </div>
 
       <div class="registro" data-registro="documento"></div>
