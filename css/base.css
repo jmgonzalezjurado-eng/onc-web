@@ -1,0 +1,45 @@
+/* ============================================================================
+   base.css — Tokens de identidad + reset compartidos por todas las páginas.
+   Cárgalo con <link rel="stylesheet"> ANTES del <style> propio de la página
+   y antes de js/layout.js (que usa estas variables). El CSS específico de
+   cada página va inline en su propio <style>.
+   ========================================================================== */
+
+:root{
+  /* Marca */
+  --teal:#00a9af;            /* turquesa — solo acento gráfico, nunca texto pequeño */
+  --navy:#13395d;
+
+  /* Roles */
+  --ink:#13395d;             /* texto y trazos (lo que antes era negro) */
+  --paper:#ffffff;           /* fondo de las zonas de lectura */
+  --muted:#3c5a82;           /* texto secundario */
+  --line:#13395d;            /* líneas del marco */
+  --linea:2px;               /* grosor de esas líneas */
+
+  /* Métrica */
+  --marco:clamp(1.1rem, 3vw, 2.6rem);
+  --sangria:clamp(1rem, 2.5vw, 2rem);   /* inset de las líneas del marco */
+  --nav-h:clamp(3.2rem, 6vh, 4rem);
+  --foot-h:clamp(4rem, 10vh, 5.2rem);
+
+  /* Tipografía */
+  --sans:"IBM Plex Sans", system-ui, sans-serif;   /* pesos cargados: 400–700 */
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+}
+a{ color:inherit; }
+button{ font-family:inherit; }
+
+/* Identidad tipográfica: títulos en MAYÚSCULAS, cuerpo en caja normal.
+   (Se listan también selectores que solo existen en una de las páginas;
+   los que no casan, CSS los ignora.) */
+h1,h2,h3,.eyebrow,.cab h1,.art__meta .cat{ text-transform:uppercase; }

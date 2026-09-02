@@ -1,204 +1,403 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIIF · exploración de rediseño</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<script src="js/layout.js" defer></script>
+<style>
+  /* Tokens de identidad y reset: css/base.css. Aquí, solo el CSS propio de la home. */
+  body{ overflow:hidden; display:flex; flex-direction:column; }
 
-  <title>Observatorio de Normalización Contable</title>
-  <meta name="description" content="Seguimiento y análisis de la normativa contable internacional. Un proyecto de la Universidad Loyola Andalucía en colaboración con el ICAC.">
+  /* Header, footer, menú móvil y modal legal: estilos en js/layout.js (compartidos) */
 
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="es_ES">
-  <meta property="og:site_name" content="Observatorio de Normalización Contable">
-  <meta property="og:title" content="Observatorio de Normalización Contable">
-  <meta property="og:description" content="Seguimiento y análisis de la normativa contable internacional. Universidad Loyola Andalucía · ICAC.">
-  <meta property="og:url" content="https://TU-DOMINIO.es/">
-  <meta property="og:image" content="https://TU-DOMINIO.es/img/og/og-general.png">
-  <meta name="twitter:card" content="summary_large_image">
+  /* ===== ESCENARIO ===== */
+  .escenario{ flex:1 1 auto; position:relative; overflow:hidden; }
+  .seccion{ position:absolute; inset:0; padding:clamp(1.2rem,3.5vh,2.6rem) var(--marco);
+    overflow-y:auto; opacity:0; visibility:hidden; }
+  .seccion.activa{ opacity:1; visibility:visible; animation:entra .5s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes entra{ from{ opacity:0; transform:translateX(30px); } to{ opacity:1; transform:none; } }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/estilo.css">
+  /* ===== BARRIDO DE CARGA ===== */
+  .cargando{ position:fixed; inset:0; z-index:120; background:var(--navy); color:var(--paper);
+    display:flex; align-items:center; justify-content:center; transform:scaleY(0); transform-origin:bottom;
+    transition:transform .32s cubic-bezier(.7,0,.3,1); pointer-events:none; }
+  .cargando.on{ transform:scaleY(1); }
+  .cargando b{ font-weight:700; font-size:clamp(2.5rem,9vw,6rem); letter-spacing:.04em; }
+  .cargando i{ font-style:normal; display:block; text-align:center; font-weight:500;
+    font-size:.7rem; letter-spacing:.3em; margin-top:.6rem; color:var(--teal); }
+
+
+
+  /* ===== INICIO (nuevo layout: texto+docs a la izquierda, vídeo a la derecha) ===== */
+  .inicio{ height:100%; display:grid;
+    grid-template-columns:1fr 1.05fr;
+    gap:clamp(1.5rem,3.5vw,3rem); }
+
+  .hero-izq{ min-width:0; min-height:0; overflow:hidden;
+    display:flex; flex-direction:column; gap:clamp(1.2rem,2.5vh,2rem); }
+
+  .hero-texto{ max-width:44ch; }
+  .hero-titulo{ margin:.5rem 0 .9rem; font-weight:700; line-height:1.08; letter-spacing:-.01em;
+    font-size:clamp(1.5rem,2.6vw,2.3rem); }
+  .hero-desc{ margin:0; font-size:clamp(.82rem,.92vw,.95rem); line-height:1.5; color:var(--ink); }
+
+  .hero-docs{ display:flex; flex-direction:column; gap:.9rem; }
+  .hero-docs .eyebrow{ margin-bottom:0; }
+  .docs-cols{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .doc-card{ display:flex; flex-direction:column; gap:.45rem; text-decoration:none; color:inherit;
+    border:var(--linea) solid var(--line); padding:.9rem 1rem; transition:background .18s ease, color .18s ease; }
+  .doc-card:hover{ background:var(--ink); color:var(--paper); }
+  .doc-card .cat{ font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; }
+  .doc-card .tit{ font-weight:700; font-size:.9rem; line-height:1.2; }
+  .doc-card .fecha{ font-size:.68rem; letter-spacing:.08em; opacity:.7; }
+
+  /* Botón coherente con el resto (azul, mayúsculas) */
+  .btn{ align-self:flex-start; display:inline-flex; align-items:center; gap:.4rem;
+    font-weight:700; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; text-decoration:none;
+    background:var(--ink); color:var(--paper); border:var(--linea) solid var(--ink); cursor:pointer;
+    padding:.8rem 1.3rem; transition:background .18s ease, color .18s ease; }
+  .btn:hover{ background:var(--paper); color:var(--ink); }
+
+  .hero-video{ background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center; text-align:center; min-height:0; }
+  .hero-video .ph{ font-size:.72rem; letter-spacing:.24em; text-transform:uppercase; opacity:.55; }
+
+
+
+  /* ===== ENCABEZADOS ===== */
+  .cab{ display:flex; align-items:flex-end; justify-content:space-between; gap:1rem;
+    border-bottom:var(--linea) solid var(--line); padding-bottom:1rem; margin-bottom:1.4rem; flex-wrap:wrap; }
+  .cab h1{ margin:0; font-weight:900; font-size:clamp(1.8rem,4vw,3rem); letter-spacing:-.01em; text-transform:uppercase; }
+  .cab p{ margin:0; color:var(--muted); font-size:.9rem; max-width:42ch; }
+
+  /* ===== PUBLICACIONES ===== */
+  .pub-tools{ display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1.4rem; }
+  .dd{ display:flex; flex-direction:column; gap:.3rem; }
+  .dd span{ font-size:.64rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+  .dd select{ font-family:inherit; font-weight:600; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--paper); color:var(--ink); border:var(--linea) solid var(--line); border-radius:0;
+    padding:.55rem 2.2rem .55rem .8rem; cursor:pointer; -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right .7rem center; }
+
+  .rejilla{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(.8rem,1.5vw,1.4rem); }
+  .pub{ aspect-ratio:1/1; border:var(--linea) solid var(--line); background:var(--paper); color:var(--ink);
+    padding:clamp(1rem,1.5vw,1.3rem); display:flex; flex-direction:column; justify-content:space-between;
+    transition:background .18s ease, color .18s ease; }
+  .pub:hover{ background:var(--ink); color:var(--paper); }
+  .pub__link{ text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:.5rem; flex:1; }
+  .pub__cat{ font-size:.64rem; letter-spacing:.18em; text-transform:uppercase; }
+  .pub__titulo{ font-weight:800; font-size:clamp(1rem,1.4vw,1.28rem); line-height:1.14; }
+  .pub__pie{ margin-top:.8rem; }
+  .pub__fecha{ font-size:.7rem; letter-spacing:.1em; opacity:.75; }
+  .pub__btns{ display:flex; gap:.4rem; margin-top:.6rem; }
+  .pub__b{ flex:1; text-align:center; text-decoration:none; cursor:pointer; font-family:inherit;
+    font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:inherit;
+    background:transparent; border:1px solid currentColor; padding:.42rem .3rem; }
+  .pub__b:hover{ background:currentColor; }
+  .pub__b:hover span{ color:var(--paper); mix-blend-mode:difference; }
+  .pub:hover .pub__b:hover{ background:var(--paper); }
+  .pub:hover .pub__b:hover span{ color:var(--ink); }
+  .vacio{ color:var(--muted); font-style:italic; grid-column:1/-1; padding:2rem 0; }
+
+  /* ===== EQUIPO (2 filas de 4) ===== */
+  .equipo{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(.8rem,1.5vw,1.3rem); }
+  .persona{ border:var(--linea) solid var(--line); border-top:4px solid var(--teal); padding:1.2rem;
+    transition:background .18s ease, color .18s ease; }
+  .persona:hover{ background:var(--ink); color:var(--paper); }
+  .persona__foto{ width:4rem; height:4rem; border-radius:50%; background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1rem; letter-spacing:.04em;
+    margin-bottom:.9rem; border:2px solid var(--teal); }
+  .persona:hover .persona__foto{ background:var(--paper); color:var(--ink); border-color:var(--teal); }
+  .persona h3{ margin:0 0 .2rem; font-size:.98rem; font-weight:700; line-height:1.15; letter-spacing:.01em; }
+  .persona .rol{ margin:0 0 .6rem; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  .persona:hover .rol{ color:rgba(255,255,255,.72); }
+  .persona p{ margin:0; font-size:.8rem; line-height:1.45; color:var(--muted); }
+  .persona:hover p{ color:rgba(255,255,255,.85); }
+  .persona .pill{ display:inline-block; margin-top:.8rem; font-size:.6rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    border:1px solid currentColor; border-radius:0; padding:.28rem .66rem; }
+
+  /* ===== CONTACTO ===== */
+  .contacto{ height:100%; display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,4rem); align-items:center; }
+  .contacto__intro h1{ font-weight:700; font-size:clamp(2.4rem,6vw,4.6rem); letter-spacing:-.02em; line-height:.95;
+    margin:0 0 1rem; text-transform:uppercase; }
+  .contacto__intro h1::after{ content:""; display:block; width:3.5rem; height:4px; background:var(--teal); margin-top:1rem; }
+  .contacto__intro p{ font-size:1.02rem; line-height:1.55; max-width:40ch; color:var(--muted); }
+  .form{ display:flex; flex-direction:column; gap:1.1rem; }
+  .form label{ display:flex; flex-direction:column; gap:.4rem; font-size:.66rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--muted); }
+  .form input, .form textarea{ font-family:inherit; font-size:.95rem; color:var(--ink);
+    background:var(--paper); border:var(--linea) solid var(--line); border-radius:0; padding:.7rem .8rem;
+    transition:border-color .18s ease, box-shadow .18s ease; }
+  .form input::placeholder, .form textarea::placeholder{ color:var(--muted); opacity:.6; }
+  .form input:focus, .form textarea:focus{ outline:0; border-color:var(--teal);
+    box-shadow:0 0 0 3px rgba(0,169,175,.25); }
+  .form textarea{ resize:vertical; min-height:6.5rem; }
+  .form button{ align-self:flex-start; display:inline-flex; align-items:center; gap:.4rem;
+    font-weight:700; font-size:.8rem; letter-spacing:.14em; text-transform:uppercase;
+    background:var(--ink); color:var(--paper); border:var(--linea) solid var(--ink); cursor:pointer;
+    padding:.85rem 1.5rem; transition:background .18s ease, color .18s ease; }
+  .form button:hover{ background:var(--paper); color:var(--ink); }
+
+  :focus-visible{ outline:3px solid var(--ink); outline-offset:2px; }
+
+  @media (max-width:760px){
+    /* La home deja de ser pantalla fija: se apila y se navega por scroll */
+    .escenario{ overflow:visible; }
+    .seccion{ position:static; opacity:1; visibility:visible; height:auto; }
+    .seccion:not(.activa){ display:none; }
+    .inicio{ height:auto; display:flex; flex-direction:column; gap:1.6rem; }
+    .hero-izq{ overflow:visible; display:contents; }   /* texto y docs sueltos para poder ordenarlos */
+    .hero-texto{ order:1; max-width:none; }
+    .hero-video{ order:2; min-height:52vw; }
+    .hero-docs{ order:3; }
+    .docs-cols{ grid-template-columns:1fr; }
+  }
+  @media (max-width:900px){
+    .contacto{ grid-template-columns:1fr; }
+    .equipo{ grid-template-columns:repeat(2,1fr); }
+    .rejilla{ grid-template-columns:repeat(2,1fr); }
+    body{ overflow:auto; }
+  }
+  @media (max-width:560px){ .rejilla{ grid-template-columns:1fr; } .equipo{ grid-template-columns:1fr; } }
+  @media (prefers-reduced-motion:reduce){ .seccion.activa{ animation:none; } .cargando{ transition:none; } }
+</style>
 </head>
 <body>
-<a class="skip" href="#principal">Saltar al contenido</a>
 
-<header class="site-head">
-  <div class="wrap">
-    <a class="brand" href="index.html">
-      <img class="brand__logo" src="img/logos/gaceta-contable.svg" alt="Gaceta Contable">
-    </a>
-    <nav class="site-nav" aria-label="Principal">
-      <a href="index.html" aria-current="page">Inicio</a>
-      <a href="documentos.html">Documentos</a>
-      <a href="casos.html">Casos</a>
-      <a href="entrevistas.html">Entrevistas</a>
-    </nav>
-  </div>
-</header>
+<!-- Header + línea de marco: los inyecta js/layout.js -->
+<div data-include="header"></div>
 
-<main id="principal">
+<!-- ===== ESCENARIO ===== -->
+<main class="escenario">
 
-  <!-- ===== DOCUMENTOS RECIENTES ===== -->
-  <section id="documentos" class="seccion-ink">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Publicaciones recientes</p>
-        <h2>Documentos</h2>
-        <p>Resúmenes de novedades NIIF, cartas de comentario, working papers y presentaciones elaborados por el equipo.</p>
-      </div>
-      <div class="registro" data-registro="documento" data-limite="3"></div>
-      <p style="margin-top:1.5rem"><a class="btn btn--ink" href="documentos.html">Ver todos los documentos</a></p>
-    </div>
-  </section>
+  <!-- INICIO -->
+  <section class="seccion activa" id="inicio">
+    <div class="inicio">
 
-  <!-- ===== EL PROYECTO + VÍDEO (una sola sección, sin entrada en el menú) ===== -->
-  <section>
-    <div class="wrap">
-      <div class="proyecto-grid">
-
-        <div class="texto">
+      <div class="hero-izq">
+        <div class="hero-texto">
           <p class="eyebrow">El proyecto</p>
-          <h2>De la deliberación internacional a la decisión nacional</h2>
-          <p>Las normas contables internacionales las emite el IASB y las valida en Europa el EFRAG, a través de un proceso abierto de consulta pública. El ICAC, organismo español que vela por el sistema contable, participa en ese proceso.</p>
-          <p>Este proyecto pone el análisis académico al servicio de esa participación: un equipo de la Universidad Loyola Andalucía realiza un seguimiento sistemático de los proyectos normativos, recoge la opinión de los grupos de interés españoles y elabora los documentos que enriquecen el posicionamiento del ICAC ante el IASB y el EFRAG.</p>
+          <h1 class="hero-titulo">Del debate internacional a la norma nacional</h1>
+          <p class="hero-desc">Proyecto NIIF – Universidad Loyola es una iniciativa de la Universidad Loyola dedicada al análisis de las Normas Internacionales de Información Financiera. Reúne los análisis académicos y recursos divulgativos elaborados por su equipo investigador en el marco de un proyecto de asesoramiento al ICAC, financiado por la FECYT. Está dirigido a profesionales, empresas cotizadas, auditores y reguladores del ámbito de la información financiera.</p>
         </div>
 
-        <div class="video-marco">
-          <!-- Cuando tengas el vídeo, sustituye este bloque por el iframe de "insertar" de YouTube/Vimeo:
-               <iframe src="https://www.youtube.com/embed/ID_DEL_VIDEO" title="Vídeo del proyecto"
-                       allowfullscreen loading="lazy"></iframe> -->
-          <div class="video-ph">Aquí irá el vídeo del proyecto<br>(pega el iframe de YouTube o Vimeo)</div>
+        <div class="hero-docs">
+          <p class="eyebrow">Últimas publicaciones</p>
+          <div class="docs-cols" id="home-docs"></div>
+          <button class="btn" data-ir="publicaciones">Ver todas →</button>
         </div>
-
       </div>
+
+      <div class="hero-video">
+        <div class="ph">Vídeo del proyecto</div>
+      </div>
+
     </div>
   </section>
 
-  <!-- ===== EQUIPO ===== -->
-  <section id="equipo" style="background:#fff;border-block:1px solid var(--line)">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Miembros del equipo</p>
-        <h2>Quién está detrás</h2>
-        <p>Equipo investigador de la Universidad Loyola Andalucía, organizado en tres bloques temáticos de la normativa contable.</p>
-      </div>
-      <div class="equipo-grid">
-        <article class="persona">
-          <!-- Foto: sustituye el div por  <img class="persona__foto" src="img/equipo/horacio-molina.jpg" alt="Horacio Molina Sánchez"> -->
-          <div class="persona__foto">HM</div>
-          <h3>Horacio Molina Sánchez</h3>
-          <p class="rol">Responsable del proyecto · Universidad Loyola</p>
-          <p>Vocal de la Comisión de Valoración y Financiación de AECA. Dirigió la elaboración de 12 guías técnicas de aplicación de las NIIF en Colombia (Banco Mundial).</p>
-          <span class="bloque">Seguimiento global</span>
-        </article>
-        <article class="persona">
-          <!-- Foto: sustituye el div por  <img class="persona__foto" src="img/equipo/marta-de-vicente.jpg" alt="Marta de Vicente Lama"> -->
-          <div class="persona__foto">MV</div>
-          <h3>Marta de Vicente Lama</h3>
-          <p class="rol">Universidad Loyola</p>
-          <p>Experiencia profesional como auditora. Autora de trabajos sobre información integrada y contabilidad del sector público.</p>
-          <span class="bloque">Actividad operativa</span>
-        </article>
-        <article class="persona">
-          <!-- Foto: sustituye el div por  <img class="persona__foto" src="img/equipo/antonio-barral.jpg" alt="Antonio Barral Rivada"> -->
-          <div class="persona__foto">AB</div>
-          <h3>Antonio Barral Rivada</h3>
-          <p class="rol">Universidad Loyola</p>
-          <p>Experiencia profesional como auditor. Trabajos para el ICAC sobre activos y pasivos de actividades reguladas.</p>
-          <span class="bloque">Actividad operativa</span>
-        </article>
-        <article class="persona">
-          <!-- Foto: sustituye el div por  <img class="persona__foto" src="img/equipo/maria-del-mar-ortiz.jpg" alt="María del Mar Ortiz Gómez"> -->
-          <div class="persona__foto">MO</div>
-          <h3>María del Mar Ortiz Gómez</h3>
-          <p class="rol">Universidad Loyola</p>
-          <p>Miembro del Focus Group CP de AECA. Experiencia profesional como auditora.</p>
-          <span class="bloque">Actividad operativa</span>
-        </article>
-        <article class="persona">
-          <!-- Foto: sustituye el div por  <img class="persona__foto" src="img/equipo/gema-gutierrez.jpg" alt="Gema Gutiérrez Romero"> -->
-          <div class="persona__foto">GG</div>
-          <h3>Gema Gutiérrez Romero</h3>
-          <p class="rol">Universidad Loyola</p>
-          <p>Especialista en información financiera y normativa contable internacional.</p>
-          <span class="bloque">Instrumentos financieros</span>
-        </article>
-        <article class="persona">
-          <!-- Foto: sustituye el div por  <img class="persona__foto" src="img/equipo/jose-antonio-arcenegui.jpg" alt="José Antonio Arcenegui Rodrigo"> -->
-          <div class="persona__foto">JA</div>
-          <h3>José Antonio Arcenegui Rodrigo</h3>
-          <p class="rol">Universidad Loyola</p>
-          <p>Profesor asociado de la Universidad Loyola Andalucía. Experiencia profesional como auditor.</p>
-          <span class="bloque">Instrumentos financieros</span>
-        </article>
-        <article class="persona">
-          <!-- Foto: sustituye el div por  <img class="persona__foto" src="img/equipo/constancio-zamora.jpg" alt="Constancio Zamora Ramírez"> -->
-          <div class="persona__foto">CZ</div>
-          <h3>Constancio Zamora Ramírez</h3>
-          <p class="rol">Universidad de Sevilla</p>
-          <p>Vocal del Comité Consultivo de la Contabilidad del ICAC y de la Comisión de Principios Contables de AECA.</p>
-          <span class="bloque">Instrumentos financieros</span>
-        </article>
-        <article class="persona">
-          <!-- Foto: sustituye el div por  <img class="persona__foto" src="img/equipo/enrique-mesa.jpg" alt="Enrique Mesa Pérez"> -->
-          <div class="persona__foto">EM</div>
-          <h3>Enrique Mesa Pérez</h3>
-          <p class="rol">Universidad Pablo de Olavide</p>
-          <p>Miembro del grupo de investigación ERGO. Community manager de la European Accounting Association (EAA).</p>
-          <span class="bloque">Presentación de información</span>
-        </article>
-      </div>
+  <!-- PUBLICACIONES -->
+  <section class="seccion" id="publicaciones">
+    <div class="cab">
+      <h1>Publicaciones</h1>
+      <p>Resúmenes de novedades, cartas de comentario, working papers, presentaciones, casos y entrevistas.</p>
     </div>
+    <div class="pub-tools">
+      <label class="dd"><span>Tipo</span>
+        <select id="f-cat">
+          <option value="todas">Todas las categorías</option>
+          <option value="resumen-niif">Resúmenes NIIF</option>
+          <option value="carta-comentario">Cartas de comentario</option>
+          <option value="working-paper">Working papers</option>
+          <option value="presentacion">Presentaciones</option>
+          <option value="caso">Casos</option>
+          <option value="entrevista">Entrevistas</option>
+          <option value="otros">Otros</option>
+        </select>
+      </label>
+      <label class="dd"><span>Mes</span>
+        <select id="f-mes"><option value="todos">Todos los meses</option></select>
+      </label>
+    </div>
+    <div class="rejilla" id="rejilla"></div>
   </section>
 
-  <!-- ===== CASOS RECIENTES (tarjetas) ===== -->
-  <section style="background:#fff;border-block:1px solid var(--line)">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Casos recientes</p>
-        <h2>Casos prácticos</h2>
-      </div>
-      <div class="carrusel" data-tarjetas="caso" data-limite="3"></div>
-      <p style="margin-top:1.5rem"><a class="btn" href="casos.html">Ver todos los casos</a></p>
+  <!-- EQUIPO -->
+  <section class="seccion" id="equipo">
+    <div class="cab">
+      <h1>Equipo</h1>
+      <p>Equipo investigador de la Universidad Loyola Andalucía, organizado en tres bloques temáticos.</p>
     </div>
+    <div class="equipo" id="equipo-grid"></div>
   </section>
 
-  <!-- ===== ENTREVISTAS RECIENTES (tarjetas) ===== -->
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Entrevistas recientes</p>
-        <h2>Entrevistas</h2>
+  <!-- CONTACTO -->
+  <section class="seccion" id="contacto">
+    <div class="contacto">
+      <div class="contacto__intro">
+        <h1>¿Hablamos?</h1>
+        <p>Para consultas sobre el proyecto, colaboraciones o participación en los procesos de consulta, escríbenos. Al enviar se abrirá tu aplicación de correo con el mensaje ya preparado.</p>
       </div>
-      <div class="carrusel" data-tarjetas="entrevista" data-limite="3"></div>
-      <p style="margin-top:1.5rem"><a class="btn" href="entrevistas.html">Ver todas las entrevistas</a></p>
+      <form class="form" id="form-contacto">
+        <label>Correo electrónico
+          <input type="email" id="c-email" placeholder="tu@correo.com" required>
+        </label>
+        <label>Asunto
+          <input type="text" id="c-asunto" placeholder="Motivo de tu consulta" required>
+        </label>
+        <label>Mensaje
+          <textarea id="c-msg" placeholder="Escribe tu mensaje" required></textarea>
+        </label>
+        <button type="submit">Enviar →</button>
+      </form>
     </div>
   </section>
 
 </main>
 
+<!-- Línea de marco + footer: los inyecta js/layout.js -->
+<div data-include="footer"></div>
+
+<!-- ===== BARRIDO ===== -->
+<div class="cargando" id="cargando" aria-hidden="true"><div><b>NIIF</b><i>cargando</i></div></div>
+
+<script>
+/* ===================== CONTENIDO (demo) ===================== */
+var CONTENIDO = [
+  { cat:"resumen-niif",etq:"Resumen NIIF",fecha:"2026-01-15",titulo:"Reunión del IASB — enero 2026",pagina:"#",pdf:"#" },
+  { cat:"carta-comentario",etq:"Carta de comentario",fecha:"2025-12-10",titulo:"Comentarios al ED sobre gestión dinámica de riesgos",pagina:"#",pdf:"#" },
+  { cat:"working-paper",etq:"Working paper",fecha:"2025-11-20",titulo:"Convergencia del PGC con la NIIF 16",pagina:"#",pdf:"#" },
+  { cat:"presentacion",etq:"Presentación",fecha:"2025-11-04",titulo:"Novedades del IASB — Foro AECA",pagina:"#",pdf:"#" },
+  { cat:"resumen-niif",etq:"Resumen NIIF",fecha:"2025-10-16",titulo:"Reunión del IASB — octubre 2025",pagina:"#",pdf:"#" },
+  { cat:"otros",etq:"Otros",fecha:"2025-10-02",titulo:"Nota técnica: activos por tarifas reguladas",pagina:"#",pdf:"#" },
+  { cat:"carta-comentario",etq:"Carta de comentario",fecha:"2025-09-18",titulo:"Comentarios sobre estados financieros primarios",pagina:"#",pdf:"#" },
+  { cat:"working-paper",etq:"Working paper",fecha:"2025-09-01",titulo:"Medición a coste amortizado: análisis",pagina:"#",pdf:"#" },
+  { cat:"presentacion",etq:"Presentación",fecha:"2025-08-22",titulo:"Jornada de Normalización Contable",pagina:"#",pdf:"#" },
+  { cat:"caso",etq:"Caso",fecha:"2025-11-12",titulo:"Caso práctico: primera aplicación de la NIIF 17 en una aseguradora",pagina:"#",pdf:"#" },
+  { cat:"caso",etq:"Caso",fecha:"2025-09-30",titulo:"Caso práctico: combinaciones de negocios bajo control común",pagina:"#",pdf:"#" },
+  { cat:"entrevista",etq:"Entrevista",fecha:"2025-10-28",titulo:"Entrevista: la visión del ICAC sobre el proyecto de EFRAG",pagina:"#",pdf:"#" },
+  { cat:"entrevista",etq:"Entrevista",fecha:"2025-09-10",titulo:"Entrevista a un miembro del IASB sobre estados financieros primarios",pagina:"#",pdf:"#" }
+];
+var EQUIPO = [
+  ["Dr. Horacio Molina Sánchez","Responsable · U. Loyola","Vocal de la Comisión de Valoración y Financiación de AECA.","Seguimiento global","HM"],
+  ["Dra. Marta de Vicente Lama","Doctora · U. Loyola","Experiencia como auditora. Información integrada.","Actividad operativa","MV"],
+  ["Dr. Antonio Barral Rivada","Doctor · U. Loyola","Trabajos para el ICAC sobre activos y pasivos regulados.","Actividad operativa","AB"],
+  ["Dra. María del Mar Ortiz Gómez","Doctora · U. Loyola","Miembro del Focus Group CP de AECA.","Actividad operativa","MO"],
+  ["Dra. Gema Gutiérrez Romero","Doctora · U. Loyola","Especialista en información financiera internacional.","Instrumentos financieros","GG"],
+  ["Dr. José Antonio Arcenegui Rodrigo","Doctor · U. Loyola","Profesor asociado. Experiencia como auditor.","Instrumentos financieros","JA"],
+  ["Dr. Constancio Zamora Ramírez","Doctor · U. Sevilla","Vocal del Comité Consultivo del ICAC.","Instrumentos financieros","CZ"],
+  ["Enrique Mesa Pérez","U. Pablo de Olavide","Grupo ERGO. Community manager de la EAA.","Presentación de información","EM"]
+];
+var MESES=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+var MESES_L=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+function fechaTxt(iso){ var p=iso.split("-"); return p[2]+" "+MESES[+p[1]-1]+" "+p[0]; }
+function ym(iso){ return iso.slice(0,7); }
+function ymTxt(k){ var p=k.split("-"); return MESES_L[+p[1]-1]+" "+p[0]; }
+function ordenar(l){ return l.slice().sort(function(a,b){ return a.fecha<b.fecha?1:-1; }); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+/* ===== INICIO: dos últimas publicaciones en columnas ===== */
+(function(){
+  var cont=document.getElementById("home-docs"); if(!cont) return;
+  var dos=ordenar(CONTENIDO).slice(0,2);
+  cont.innerHTML=dos.map(function(d){
+    return '<a class="doc-card" href="'+esc(d.pagina)+'">'+
+      '<span class="cat">'+esc(d.etq)+'</span>'+
+      '<span class="tit">'+esc(d.titulo)+'</span>'+
+      '<span class="fecha">'+fechaTxt(d.fecha)+'</span>'+
+    '</a>';
+  }).join("");
+})();
+
+/* ===== PUBLICACIONES: filtros (categoría + mes) y tarjetas ===== */
+(function(){
+  var meses=[]; ordenar(CONTENIDO).forEach(function(d){ var k=ym(d.fecha); if(meses.indexOf(k)<0) meses.push(k); });
+  var sel=document.getElementById("f-mes");
+  meses.forEach(function(k){ var o=document.createElement("option"); o.value=k; o.textContent=ymTxt(k); sel.appendChild(o); });
+})();
+function pintarPubs(){
+  var cat=document.getElementById("f-cat").value, mes=document.getElementById("f-mes").value;
+  var lista=ordenar(CONTENIDO).filter(function(d){
+    return (cat==="todas"||d.cat===cat) && (mes==="todos"||ym(d.fecha)===mes);
+  });
+  var cont=document.getElementById("rejilla");
+  if(!lista.length){ cont.innerHTML='<p class="vacio">No hay publicaciones con estos filtros.</p>'; return; }
+  cont.innerHTML=lista.map(function(d){
+    return '<article class="pub">'+
+      '<a class="pub__link" href="'+d.pagina+'"><span class="pub__cat">'+d.etq+'</span>'+
+        '<span class="pub__titulo">'+esc(d.titulo)+'</span></a>'+
+      '<div class="pub__pie"><span class="pub__fecha">'+fechaTxt(d.fecha)+'</span>'+
+        '<div class="pub__btns">'+
+          '<button class="pub__b js-share" data-url="'+d.pagina+'" data-titulo="'+esc(d.titulo)+'"><span>Compartir</span></button>'+
+          '<a class="pub__b" href="'+d.pdf+'" download><span>Descargar</span></a>'+
+        '</div></div></article>';
+  }).join("");
+}
+pintarPubs();
+document.getElementById("f-cat").addEventListener("change",pintarPubs);
+document.getElementById("f-mes").addEventListener("change",pintarPubs);
+
+/* compartir */
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".js-share"); if(!b) return;
+  var url; try{ url=new URL(b.getAttribute("data-url"),location.href).href; }catch(_){ url=b.getAttribute("data-url"); }
+  var t=b.getAttribute("data-titulo")||document.title;
+  if(navigator.share){ navigator.share({title:t,url:url}).catch(function(){}); }
+  else{ window.open("https://www.linkedin.com/sharing/share-offsite/?url="+encodeURIComponent(url),"_blank","noopener,width=600,height=680"); }
+});
+
+/* ===== EQUIPO ===== */
+document.getElementById("equipo-grid").innerHTML = EQUIPO.map(function(p){
+  return '<article class="persona"><div class="persona__foto">'+p[4]+'</div>'+
+    '<h3>'+esc(p[0])+'</h3><p class="rol">'+esc(p[1])+'</p><p>'+esc(p[2])+'</p>'+
+    '<span class="pill">'+esc(p[3])+'</span></article>';
+}).join("");
+
+/* ===== CONTACTO: form -> mailto ===== */
+document.getElementById("form-contacto").addEventListener("submit",function(e){
+  e.preventDefault();
+  var email=document.getElementById("c-email").value.trim();
+  var asunto=document.getElementById("c-asunto").value.trim();
+  var msg=document.getElementById("c-msg").value.trim();
+  var cuerpo=msg+"\r\n\r\n—\r\nEnviado desde el formulario web por: "+email;
+  var url="mailto:contacto@TU-DOMINIO.es?subject="+encodeURIComponent(asunto)+"&body="+encodeURIComponent(cuerpo);
+  window.location.href=url;
+});
+
+/* ===== NAVEGACIÓN + BARRIDO =====
+   El header/menú y su comportamiento están en js/layout.js. Aquí solo se
+   escucha el evento `niif:navigate` que emite el menú compartido y se hace
+   el barrido entre secciones. El botón "Ver todas" (in-page) sigue usando
+   [data-ir]. */
+var actual="inicio";
+var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function activar(id){
+  document.querySelectorAll(".seccion").forEach(function(s){ s.classList.toggle("activa", s.id===id); });
+  document.querySelectorAll(".menu-esc a, .menu-movil a").forEach(function(b){
+    b.setAttribute("aria-current", b.getAttribute("data-sec")===id?"page":"false");
+  });
+  document.body.classList.remove("nav-abierto");        // cierra el menú móvil al navegar
+  var bg=document.getElementById("burger"); if(bg) bg.setAttribute("aria-expanded","false");
+  actual=id; var a=document.getElementById(id); if(a) a.scrollTop=0;
+}
+function irA(id){
+  if(id===actual) return;
+  var ov=document.getElementById("cargando");
+  if(reduce){ activar(id); return; }
+  ov.classList.add("on");
+  window.setTimeout(function(){ activar(id); },320);
+  window.setTimeout(function(){ ov.style.transformOrigin="top"; ov.classList.remove("on");
+    window.setTimeout(function(){ ov.style.transformOrigin="bottom"; },340); },500);
+}
+document.addEventListener("click",function(e){ var ir=e.target.closest("[data-ir]"); if(ir) irA(ir.getAttribute("data-ir")); });
+document.addEventListener("niif:navigate",function(e){ irA(e.detail.sec); });
 
 
-<footer class="site-foot">
-  <!-- ===== LOGOS INSTITUCIONALES (dentro del pie, igual en todas las páginas) ===== -->
-  <div class="wrap foot-logos">
-    <div class="logos-caja">
-      <div class="logos-caja__grupo logos-caja__onc">
-        <img src="img/logos/logos-onc.svg" alt="Universidad Loyola Andalucía, Gobierno de España e ICAC" loading="lazy">
-      </div>
-      <hr class="logos-caja__sep">
-      <div class="logos-caja__grupo logos-caja__fecyt">
-        <p class="logos-caja__label">Con la colaboración de</p>
-        <img src="img/logos/fecyt.svg" alt="FECYT — Fundación Española para la Ciencia y la Tecnología. Ministerio de Ciencia, Innovación y Universidades" loading="lazy">
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script src="data/documentos.js"></script>
-<script src="js/registro.js"></script>
-<script src="js/legal.js"></script>
+</script>
 </body>
 </html>
