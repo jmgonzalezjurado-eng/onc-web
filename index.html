@@ -98,22 +98,21 @@
   .pub__btns{ display:flex; gap:.4rem; margin-top:.6rem; }
   .pub__b{ flex:1; text-align:center; text-decoration:none; cursor:pointer; font-family:inherit;
     font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:inherit;
-    background:transparent; border:1px solid currentColor; padding:.42rem .3rem; }
-  .pub__b:hover{ background:currentColor; }
-  .pub__b:hover span{ color:var(--paper); mix-blend-mode:difference; }
-  .pub:hover .pub__b:hover{ background:var(--paper); }
-  .pub:hover .pub__b:hover span{ color:var(--ink); }
+    background:transparent; border:1px solid currentColor; padding:.42rem .3rem;
+    transition:background .15s ease, color .15s ease, border-color .15s ease; }
+  .pub__b:hover{ background:var(--paper); border-color:var(--paper); }
+  .pub__b:hover span{ color:var(--ink); }
   .vacio{ color:var(--muted); font-style:italic; grid-column:1/-1; padding:2rem 0; }
 
   /* ===== EQUIPO (2 filas de 4) ===== */
   .equipo{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(.8rem,1.5vw,1.3rem); }
-  .persona{ border:var(--linea) solid var(--line); border-top:4px solid var(--teal); padding:1.2rem;
+  .persona{ border:var(--linea) solid var(--line); padding:1.2rem;
     transition:background .18s ease, color .18s ease; }
   .persona:hover{ background:var(--ink); color:var(--paper); }
   .persona__foto{ width:4rem; height:4rem; border-radius:50%; background:var(--ink); color:var(--paper);
     display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1rem; letter-spacing:.04em;
-    margin-bottom:.9rem; border:2px solid var(--teal); }
-  .persona:hover .persona__foto{ background:var(--paper); color:var(--ink); border-color:var(--teal); }
+    margin-bottom:.9rem; border:2px solid var(--ink); }
+  .persona:hover .persona__foto{ background:var(--paper); color:var(--ink); border-color:var(--paper); }
   .persona h3{ margin:0 0 .2rem; font-size:.98rem; font-weight:700; line-height:1.15; letter-spacing:.01em; }
   .persona .rol{ margin:0 0 .6rem; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
   .persona:hover .rol{ color:rgba(255,255,255,.72); }
@@ -267,21 +266,17 @@
 <div class="cargando" id="cargando" aria-hidden="true"><div><b>NIIF</b><i>cargando</i></div></div>
 
 <script>
-/* ===================== CONTENIDO (demo) ===================== */
+/* ===================== CONTENIDO =====================
+   1 publicación real + 1 entrada de ejemplo (marcador). Añadir aquí las
+   reales, con su ruta a la página (publicaciones/…) y su PDF (pdf/…). */
 var CONTENIDO = [
-  { cat:"resumen-niif",etq:"Resumen NIIF",fecha:"2026-01-15",titulo:"Reunión del IASB — enero 2026",pagina:"#",pdf:"#" },
-  { cat:"carta-comentario",etq:"Carta de comentario",fecha:"2025-12-10",titulo:"Comentarios al ED sobre gestión dinámica de riesgos",pagina:"#",pdf:"#" },
-  { cat:"working-paper",etq:"Working paper",fecha:"2025-11-20",titulo:"Convergencia del PGC con la NIIF 16",pagina:"#",pdf:"#" },
-  { cat:"presentacion",etq:"Presentación",fecha:"2025-11-04",titulo:"Novedades del IASB — Foro AECA",pagina:"#",pdf:"#" },
-  { cat:"resumen-niif",etq:"Resumen NIIF",fecha:"2025-10-16",titulo:"Reunión del IASB — octubre 2025",pagina:"#",pdf:"#" },
-  { cat:"otros",etq:"Otros",fecha:"2025-10-02",titulo:"Nota técnica: activos por tarifas reguladas",pagina:"#",pdf:"#" },
-  { cat:"carta-comentario",etq:"Carta de comentario",fecha:"2025-09-18",titulo:"Comentarios sobre estados financieros primarios",pagina:"#",pdf:"#" },
-  { cat:"working-paper",etq:"Working paper",fecha:"2025-09-01",titulo:"Medición a coste amortizado: análisis",pagina:"#",pdf:"#" },
-  { cat:"presentacion",etq:"Presentación",fecha:"2025-08-22",titulo:"Jornada de Normalización Contable",pagina:"#",pdf:"#" },
-  { cat:"caso",etq:"Caso",fecha:"2025-11-12",titulo:"Caso práctico: primera aplicación de la NIIF 17 en una aseguradora",pagina:"#",pdf:"#" },
-  { cat:"caso",etq:"Caso",fecha:"2025-09-30",titulo:"Caso práctico: combinaciones de negocios bajo control común",pagina:"#",pdf:"#" },
-  { cat:"entrevista",etq:"Entrevista",fecha:"2025-10-28",titulo:"Entrevista: la visión del ICAC sobre el proyecto de EFRAG",pagina:"#",pdf:"#" },
-  { cat:"entrevista",etq:"Entrevista",fecha:"2025-09-10",titulo:"Entrevista a un miembro del IASB sobre estados financieros primarios",pagina:"#",pdf:"#" }
+  { cat:"resumen-niif", etq:"Resumen NIIF", fecha:"2026-05-01",
+    titulo:"Comentario IASB — mayo 2026",
+    pagina:"publicaciones/comentario-iasb-mayo-2026.html",
+    pdf:"pdf/comentario-iasb-mayo-2026.pdf" },
+  { cat:"carta-comentario", etq:"Carta de comentario", fecha:"2026-03-15",
+    titulo:"Publicación de ejemplo (marcador)",
+    pagina:"#", pdf:"#" }
 ];
 var EQUIPO = [
   ["Dr. Horacio Molina Sánchez","Responsable · U. Loyola","Vocal de la Comisión de Valoración y Financiación de AECA.","Seguimiento global","HM"],
