@@ -56,7 +56,7 @@
       <div class="logos-fila">
         <img src="{{root}}img/logo-loyola.svg" alt="Universidad Loyola">
         <img src="{{root}}img/logo-gobierno.svg" alt="Gobierno de España · Ministerio de Economía, Comercio y Empresa">
-        <img src="{{root}}img/logo-icac.svg" alt="ICAC — Instituto de Contabilidad y Auditoría de Cuentas">
+        <img src="{{root}}img/logo-icac.svg" alt="ICAC — Instituto de Contabilidad y Auditoría de Cuentas" class="logo-icac">
       </div>
     </div>
     <div class="foot__cel foot__fecyt">
@@ -136,6 +136,7 @@
 .foot__cel + .foot__cel::before{ content:""; position:absolute; left:0; top:.9rem; bottom:.9rem; width:1px; background:rgba(0,0,0,.22); }
 .foot__logos .logos-fila{ display:flex; align-items:center; flex-wrap:wrap; gap:clamp(.6rem,2vw,1.1rem); width:100%; }
 .logos-fila img{ max-height:1.9rem; max-width:100%; width:auto; }
+.logos-fila img.logo-icac{ max-height:1.5rem; }
 .foot__fecyt{ flex-direction:column; align-items:flex-start; justify-content:center; gap:.3rem; }
 .micro{ margin:0; font-size:.56rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
 .foot__fecyt img{ max-height:2.1rem; width:auto; max-width:14rem; }
