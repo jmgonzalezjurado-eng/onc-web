@@ -230,7 +230,7 @@
   <section class="seccion" id="equipo">
     <div class="cab">
       <h1>Equipo</h1>
-      <p>Equipo investigador de la Universidad Loyola, organizado en tres bloques temáticos.</p>
+      <p>Equipo investigador del proyecto, organizado en tres bloques temáticos.</p>
     </div>
     <div class="equipo" id="equipo-grid"></div>
   </section>
@@ -239,8 +239,8 @@
   <section class="seccion" id="contacto">
     <div class="contacto">
       <div class="contacto__intro">
-        <h1>¿Hablamos?</h1>
-        <p>Para consultas sobre el proyecto, colaboraciones o participación en los procesos de consulta, escríbenos. Al enviar se abrirá tu aplicación de correo con el mensaje ya preparado.</p>
+        <h1>Estamos a su disposición</h1>
+        <p>Para consultas sobre el proyecto, colaboraciones o participación en los procesos de consulta, escríbanos. Al enviar se abrirá su aplicación de correo con el mensaje ya preparado.</p>
       </div>
       <form class="form" id="form-contacto">
         <label>Correo electrónico
@@ -360,7 +360,7 @@ document.getElementById("form-contacto").addEventListener("submit",function(e){
   var asunto=document.getElementById("c-asunto").value.trim();
   var msg=document.getElementById("c-msg").value.trim();
   var cuerpo=msg+"\r\n\r\n—\r\nEnviado desde el formulario web por: "+email;
-  var url="mailto:contacto@TU-DOMINIO.es?subject="+encodeURIComponent(asunto)+"&body="+encodeURIComponent(cuerpo);
+  var url="mailto:hmolina@uloyola.es?subject="+encodeURIComponent(asunto)+"&body="+encodeURIComponent(cuerpo);
   window.location.href=url;
 });
 

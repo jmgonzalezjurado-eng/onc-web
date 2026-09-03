@@ -53,8 +53,8 @@
 <footer class="foot">
   <div class="foot__grid">
     <div class="foot__cel foot__logos">
-      <div class="carrusel" id="carrusel">
-        <img src="{{root}}img/logo-loyola.svg" alt="Universidad Loyola" class="on">
+      <div class="logos-fila">
+        <img src="{{root}}img/logo-loyola.svg" alt="Universidad Loyola">
         <img src="{{root}}img/logo-gobierno.svg" alt="Gobierno de España · Ministerio de Economía, Comercio y Empresa">
         <img src="{{root}}img/logo-icac.svg" alt="ICAC — Instituto de Contabilidad y Auditoría de Cuentas">
       </div>
@@ -131,13 +131,11 @@
 
 /* ===== FOOTER ===== */
 .foot{ flex:none; min-height:var(--foot-h); z-index:20; }
-.foot__grid{ display:grid; grid-template-columns:1.2fr 1.25fr 1.45fr; }
+.foot__grid{ display:grid; grid-template-columns:1.7fr 1fr 1.35fr; }
 .foot__cel{ position:relative; display:flex; align-items:center; padding:.7rem var(--marco); min-height:var(--foot-h); }
 .foot__cel + .foot__cel::before{ content:""; position:absolute; left:0; top:.9rem; bottom:.9rem; width:1px; background:rgba(0,0,0,.22); }
-.foot__logos .carrusel{ position:relative; height:2rem; width:100%; max-width:15rem; }
-.carrusel img{ position:absolute; left:0; top:50%; transform:translateY(-50%); max-height:2rem; max-width:100%;
-  width:auto; opacity:0; transition:opacity .55s ease; }
-.carrusel img.on{ opacity:1; }
+.foot__logos .logos-fila{ display:flex; align-items:center; flex-wrap:wrap; gap:clamp(.6rem,2vw,1.1rem); width:100%; }
+.logos-fila img{ max-height:1.9rem; max-width:100%; width:auto; }
 .foot__fecyt{ flex-direction:column; align-items:flex-start; justify-content:center; gap:.3rem; }
 .micro{ margin:0; font-size:.56rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
 .foot__fecyt img{ max-height:2.1rem; width:auto; max-width:14rem; }
@@ -168,7 +166,6 @@
 .modal__body{ padding:1.3rem; font-size:.9rem; line-height:1.6; color:var(--muted); }
 
 @media (prefers-reduced-motion:reduce){
-  .carrusel img{ transition:none; }
   .menu-movil{ transition:none; }
 }`;
 
@@ -240,18 +237,6 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") cerrarMenu();
   });
-
-  /* --------------------------------------------------- carrusel de logos */
-  (function () {
-    var imgs = document.querySelectorAll("#carrusel img");
-    if (imgs.length < 2) return;
-    var i = 0;
-    setInterval(function () {
-      imgs[i].classList.remove("on");
-      i = (i + 1) % imgs.length;
-      imgs[i].classList.add("on");
-    }, 2600);
-  })();
 
   /* ------------------------------------------------------- modal legal */
   var TEXTOS = {
