@@ -84,6 +84,15 @@
   </div>
 </div>`;
 
+  var COOKIES = `
+<div class="cookie-bar" id="cookie-bar" role="region" aria-label="Aviso de cookies">
+  <p>Si continúas navegando, consideramos que aceptas el uso de cookies.</p>
+  <div class="cookie-bar__acc">
+    <button class="cookie-bar__ok" id="cookie-ok" type="button">Aceptar</button>
+    <button class="cookie-bar__mas" data-legal="cookies" type="button">Política de cookies</button>
+  </div>
+</div>`;
+
   var CSS = `
 /* ===== MARCO ===== */
 .linea-marco{ flex:none; height:var(--linea); background:var(--line); margin:0 var(--sangria); }
@@ -166,6 +175,21 @@
 .modal__x{ background:none; border:0; font-size:1.5rem; line-height:1; cursor:pointer; color:var(--ink); }
 .modal__body{ padding:1.3rem; font-size:.9rem; line-height:1.6; color:var(--muted); }
 
+/* ===== BANNER COOKIES ===== */
+.cookie-bar{ position:fixed; left:0; right:0; bottom:0; z-index:128;
+  display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:.9rem 1.4rem;
+  padding:.85rem var(--marco); background:var(--ink); color:var(--paper);
+  border-top:var(--linea) solid var(--paper); }
+.cookie-bar p{ margin:0; max-width:60ch; font-size:.8rem; line-height:1.4; }
+.cookie-bar__acc{ display:flex; gap:.6rem; flex-wrap:wrap; }
+.cookie-bar button{ cursor:pointer; font:inherit; font-weight:700; font-size:.66rem;
+  letter-spacing:.12em; text-transform:uppercase; padding:.6rem 1.1rem; border:1px solid var(--paper);
+  transition:background .15s ease, color .15s ease; }
+.cookie-bar__ok{ background:var(--paper); color:var(--ink); }
+.cookie-bar__ok:hover{ background:transparent; color:var(--paper); }
+.cookie-bar__mas{ background:transparent; color:var(--paper); }
+.cookie-bar__mas:hover{ background:var(--paper); color:var(--ink); }
+
 @media (prefers-reduced-motion:reduce){
   .menu-movil{ transition:none; }
 }`;
@@ -191,6 +215,7 @@
   if (mf) mf.replaceWith(frag(tpl(FOOTER)));
 
   document.body.appendChild(frag(tpl(MODAL)));
+  document.body.appendChild(frag(tpl(COOKIES)));
 
   /* ------------------------------------------------- menú hamburguesa / móvil */
   var body = document.body;
@@ -262,6 +287,14 @@
   });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") cerrarModal();
+  });
+
+  /* -------------------------------------------- banner de cookies (por sesión) */
+  /* Se muestra en cada carga. "Aceptar" solo lo retira de la vista actual. */
+  var cookieBar = document.getElementById("cookie-bar");
+  var cookieOk = document.getElementById("cookie-ok");
+  if (cookieOk) cookieOk.addEventListener("click", function () {
+    if (cookieBar) cookieBar.remove();
   });
 
   /* ------------------------------------ estado inicial de la home (por hash) */

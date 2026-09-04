@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NIIF · exploración de rediseño</title>
+<title>Espacio NIIF Loyola - Seguimiento y análisis de la normativa contable internacional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -48,12 +48,13 @@
 
   .hero-docs{ display:flex; flex-direction:column; gap:.9rem; }
   .hero-docs .eyebrow{ margin-bottom:0; }
-  .docs-cols{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-  .doc-card{ display:flex; flex-direction:column; gap:.45rem; text-decoration:none; color:inherit;
-    border:var(--linea) solid var(--line); padding:.9rem 1rem; transition:background .18s ease, color .18s ease; }
+  .docs-cols{ display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+  .doc-card{ display:flex; flex-direction:column; gap:.55rem; text-decoration:none; color:inherit;
+    justify-content:space-between; min-height:clamp(8.5rem,15vh,11.5rem);
+    border:var(--linea) solid var(--line); padding:1rem; transition:background .18s ease, color .18s ease; }
   .doc-card:hover{ background:var(--ink); color:var(--paper); }
   .doc-card .cat{ font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; }
-  .doc-card .tit{ font-weight:700; font-size:.9rem; line-height:1.2; }
+  .doc-card .tit{ font-weight:700; font-size:.9rem; line-height:1.2; flex:1; }
   .doc-card .fecha{ font-size:.68rem; letter-spacing:.08em; opacity:.7; }
 
   /* Botón coherente con el resto (azul, mayúsculas) */
@@ -63,9 +64,36 @@
     padding:.8rem 1.3rem; transition:background .18s ease, color .18s ease; }
   .btn:hover{ background:var(--paper); color:var(--ink); }
 
-  .hero-video{ background:var(--ink); color:var(--paper);
-    display:flex; align-items:center; justify-content:center; text-align:center; min-height:0; }
+  /* Columna derecha: vídeo (media altura, a la altura del texto) + carrusel de noticias */
+  .hero-der{ min-width:0; min-height:0; overflow-y:auto;
+    display:flex; flex-direction:column; gap:clamp(1rem,2.2vh,1.6rem); }
+
+  .hero-video{ flex:none; background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    aspect-ratio:16/9; max-height:38vh; }
   .hero-video .ph{ font-size:.72rem; letter-spacing:.24em; text-transform:uppercase; opacity:.55; }
+
+  /* Carrusel de noticias */
+  .hero-carrusel{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; gap:.6rem; }
+  .carr{ position:relative; display:flex; align-items:center; gap:.5rem; min-width:0; }
+  .carr__track{ flex:1 1 auto; min-width:0; display:flex; gap:.8rem; overflow-x:auto;
+    scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; }
+  .carr__track::-webkit-scrollbar{ display:none; }
+  .carr__item{ flex:0 0 100%; scroll-snap-align:start; box-sizing:border-box;
+    border:var(--linea) solid var(--line); padding:.85rem; display:flex; flex-direction:column; gap:.45rem; }
+  .carr__img{ height:clamp(4.5rem,11vh,7.5rem); background:#e9eef3; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; }
+  .carr__img span{ font-size:.54rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+  .carr__tit{ margin:0; font-weight:700; font-size:.9rem; line-height:1.2; text-transform:none; }
+  .carr__linea{ margin:0; font-size:.75rem; line-height:1.4; color:var(--muted); }
+  .carr__mas{ align-self:flex-start; margin-top:.15rem; text-decoration:none; color:inherit;
+    font-weight:700; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+    border:1px solid currentColor; padding:.4rem .85rem; transition:background .15s ease, color .15s ease; }
+  .carr__mas:hover{ background:var(--ink); color:var(--paper); }
+  .carr__nav{ flex:none; width:1.9rem; height:2.4rem; cursor:pointer; font-size:1.1rem; line-height:1;
+    background:var(--paper); color:var(--ink); border:var(--linea) solid var(--line);
+    transition:background .15s ease, color .15s ease; }
+  .carr__nav:hover{ background:var(--ink); color:var(--paper); }
 
 
 
@@ -153,7 +181,8 @@
     .inicio{ height:auto; display:flex; flex-direction:column; gap:1.6rem; }
     .hero-izq{ overflow:visible; display:contents; }   /* texto y docs sueltos para poder ordenarlos */
     .hero-texto{ order:1; max-width:none; }
-    .hero-video{ order:2; min-height:52vw; }
+    .hero-der{ order:2; overflow:visible; }
+    .hero-video{ min-height:52vw; max-height:none; }
     .hero-docs{ order:3; }
     .docs-cols{ grid-template-columns:1fr; }
   }
@@ -161,6 +190,7 @@
     .contacto{ grid-template-columns:1fr; }
     .equipo{ grid-template-columns:repeat(2,1fr); }
     .rejilla{ grid-template-columns:repeat(2,1fr); }
+    .docs-cols{ grid-template-columns:repeat(2,1fr); }
     body{ overflow:auto; }
   }
   @media (max-width:560px){ .rejilla{ grid-template-columns:1fr; } .equipo{ grid-template-columns:1fr; } }
@@ -193,8 +223,19 @@
         </div>
       </div>
 
-      <div class="hero-video">
-        <div class="ph">Vídeo del proyecto</div>
+      <div class="hero-der">
+        <div class="hero-video">
+          <div class="ph">Vídeo del proyecto</div>
+        </div>
+
+        <div class="hero-carrusel">
+          <p class="eyebrow">Noticias</p>
+          <div class="carr">
+            <button class="carr__nav carr__prev" type="button" aria-label="Noticia anterior">‹</button>
+            <div class="carr__track" id="carr-track"></div>
+            <button class="carr__nav carr__next" type="button" aria-label="Siguiente noticia">›</button>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -276,7 +317,31 @@ var CONTENIDO = [
     pdf:"pdf/comentario-iasb-mayo-2026.pdf" },
   { cat:"carta-comentario", etq:"Carta de comentario", fecha:"2026-03-15",
     titulo:"Publicación de ejemplo (marcador)",
+    pagina:"#", pdf:"#" },
+  /* --- Contenido inventado provisional (borrar antes de publicar) --- */
+  { cat:"resumen-niif", etq:"Resumen NIIF", fecha:"2026-06-10",
+    titulo:"NIIF 18: presentación y desglose en los estados financieros",
+    pagina:"#", pdf:"#" },
+  { cat:"working-paper", etq:"Working paper", fecha:"2026-04-22",
+    titulo:"Impacto de la NIIF 17 en el sector asegurador español",
+    pagina:"#", pdf:"#" },
+  { cat:"presentacion", etq:"Presentación", fecha:"2026-02-18",
+    titulo:"Agenda del IASB 2026: proyectos en curso",
+    pagina:"#", pdf:"#" },
+  { cat:"entrevista", etq:"Entrevista", fecha:"2026-01-30",
+    titulo:"Entrevista: retos de la información financiera sostenible",
     pagina:"#", pdf:"#" }
+];
+/* Noticias del carrusel de inicio (inventadas, provisionales) */
+var NOTICIAS = [
+  { tit:"El IASB publica el borrador sobre estados financieros de filiales",
+    linea:"Periodo de comentarios abierto hasta septiembre de 2026.", href:"#" },
+  { tit:"Jornada NIIF Loyola: aplicación práctica de la NIIF 18",
+    linea:"Sesión con casos reales para preparadores y auditores.", href:"#" },
+  { tit:"El ICAC abre consulta sobre activos y pasivos regulados",
+    linea:"El equipo del proyecto prepara una carta de comentario.", href:"#" },
+  { tit:"Resumen mensual: decisiones del IFRS Interpretations Committee",
+    linea:"Principales conclusiones de la reunión de junio.", href:"#" }
 ];
 var EQUIPO = [
   ["Horacio Molina Sánchez","Responsable · Universidad Loyola","Vocal de la Comisión de Valoración y Financiación de AECA.","Seguimiento global","HM"],
@@ -296,17 +361,37 @@ function ymTxt(k){ var p=k.split("-"); return MESES_L[+p[1]-1]+" "+p[0]; }
 function ordenar(l){ return l.slice().sort(function(a,b){ return a.fecha<b.fecha?1:-1; }); }
 function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
 
-/* ===== INICIO: dos últimas publicaciones en columnas ===== */
+/* ===== INICIO: cuatro últimas publicaciones en columnas ===== */
 (function(){
   var cont=document.getElementById("home-docs"); if(!cont) return;
-  var dos=ordenar(CONTENIDO).slice(0,2);
-  cont.innerHTML=dos.map(function(d){
+  var ult=ordenar(CONTENIDO).slice(0,4);
+  cont.innerHTML=ult.map(function(d){
     return '<a class="doc-card" href="'+esc(d.pagina)+'">'+
       '<span class="cat">'+esc(d.etq)+'</span>'+
       '<span class="tit">'+esc(d.titulo)+'</span>'+
       '<span class="fecha">'+fechaTxt(d.fecha)+'</span>'+
     '</a>';
   }).join("");
+})();
+
+/* ===== INICIO: carrusel de noticias ===== */
+(function(){
+  var track=document.getElementById("carr-track"); if(!track) return;
+  track.innerHTML=NOTICIAS.map(function(n){
+    return '<article class="carr__item">'+
+      '<div class="carr__img"><span>Imagen</span></div>'+
+      '<h3 class="carr__tit">'+esc(n.tit)+'</h3>'+
+      '<p class="carr__linea">'+esc(n.linea)+'</p>'+
+      '<a class="carr__mas" href="'+esc(n.href)+'">Leer más →</a>'+
+    '</article>';
+  }).join("");
+  function paso(){
+    var it=track.querySelector(".carr__item");
+    return it ? it.getBoundingClientRect().width+16 : track.clientWidth;
+  }
+  var prev=document.querySelector(".carr__prev"), next=document.querySelector(".carr__next");
+  if(prev) prev.addEventListener("click",function(){ track.scrollBy({left:-paso(),behavior:"smooth"}); });
+  if(next) next.addEventListener("click",function(){ track.scrollBy({left:paso(),behavior:"smooth"}); });
 })();
 
 /* ===== PUBLICACIONES: filtros (categoría + mes) y tarjetas ===== */
