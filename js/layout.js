@@ -29,7 +29,7 @@
   var HEADER = `
 <header class="nav">
   <a class="brand" href="{{root}}index.html#inicio" data-sec="inicio" aria-label="Inicio">
-    <img src="{{root}}img/logo-header.svg" alt="Espacio NIIF Loyola">
+    <img src="{{root}}img/logo-niif.svg" alt="Espacio NIIF Loyola">
   </a>
   <nav class="menu-esc" aria-label="Principal">
     <a href="{{root}}index.html#inicio" data-sec="inicio">Inicio</a>
@@ -143,8 +143,8 @@
 .foot__grid{ display:grid; grid-template-columns:1.7fr 1fr 1.35fr; }
 .foot__cel{ position:relative; display:flex; align-items:center; padding:.7rem var(--marco); min-height:var(--foot-h); }
 .foot__cel + .foot__cel::before{ content:""; position:absolute; left:0; top:.9rem; bottom:.9rem; width:1px; background:rgba(0,0,0,.22); }
-.foot__logos .logos-fila{ display:flex; align-items:center; flex-wrap:wrap; gap:clamp(.6rem,2vw,1.1rem); width:100%; }
-.logos-fila img{ max-height:1.9rem; max-width:100%; width:auto; }
+.foot__logos .logos-fila{ display:flex; align-items:center; flex-wrap:nowrap; gap:clamp(.5rem,1.8vw,1.1rem); width:100%; }
+.logos-fila img{ max-height:1.9rem; max-width:100%; width:auto; min-width:0; flex:0 1 auto; }
 .logos-fila img.logo-icac{ max-height:1.5rem; }
 .foot__fecyt{ flex-direction:column; align-items:flex-start; justify-content:center; gap:.3rem; }
 .micro{ margin:0; font-size:.56rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
