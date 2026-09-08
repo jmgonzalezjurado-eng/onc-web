@@ -95,6 +95,11 @@
     background:var(--paper); color:var(--ink); border:var(--linea) solid var(--line);
     transition:background .15s ease, color .15s ease; }
   .carr__nav:hover{ background:var(--ink); color:var(--paper); }
+  .carr__dots{ display:flex; justify-content:center; gap:.45rem; margin-top:.1rem; }
+  .carr__dot{ width:.5rem; height:.5rem; border-radius:50%; padding:0; cursor:pointer;
+    background:var(--paper); border:1px solid var(--line);
+    transition:background .15s ease, border-color .15s ease; }
+  .carr__dot.is-active{ background:var(--ink); border-color:var(--ink); }
 
 
 
@@ -239,6 +244,7 @@
             <div class="carr__track" id="carr-track"></div>
             <button class="carr__nav carr__next" type="button" aria-label="Siguiente noticia">›</button>
           </div>
+          <div class="carr__dots" id="carr-dots" role="tablist" aria-label="Selector de noticia"></div>
         </div>
       </div>
 
@@ -409,6 +415,27 @@ function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&am
   var prev=document.querySelector(".carr__prev"), next=document.querySelector(".carr__next");
   if(prev) prev.addEventListener("click",function(){ track.scrollBy({left:-paso(),behavior:"smooth"}); });
   if(next) next.addEventListener("click",function(){ track.scrollBy({left:paso(),behavior:"smooth"}); });
+
+  var dots=document.getElementById("carr-dots");
+  if(dots){
+    dots.innerHTML=NOTICIAS.map(function(n,i){
+      return '<button class="carr__dot" type="button" role="tab" aria-label="Ir a la noticia '+(i+1)+'"></button>';
+    }).join("");
+    var botones=dots.querySelectorAll(".carr__dot");
+    botones.forEach(function(b,i){
+      b.addEventListener("click",function(){ track.scrollTo({left:paso()*i,behavior:"smooth"}); });
+    });
+    var activo=function(){
+      var idx=Math.round(track.scrollLeft/paso());
+      botones.forEach(function(b,i){
+        var on=i===idx;
+        b.classList.toggle("is-active",on);
+        b.setAttribute("aria-selected",on?"true":"false");
+      });
+    };
+    var t; track.addEventListener("scroll",function(){ clearTimeout(t); t=setTimeout(activo,80); });
+    activo();
+  }
 })();
 
 /* ===== PUBLICACIONES: filtros (categoría + mes) y tarjetas ===== */
